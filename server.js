@@ -12,7 +12,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
 MongoClient.connect(process.env.connectionString, { useUnifiedTopology: true })
-   .then(client => {
+  .then(client => {
     console.log('Connected to Database')
     const db = client.db('films')
     const filmCollection = db.collection("kinderhorror")
@@ -24,63 +24,54 @@ MongoClient.connect(process.env.connectionString, { useUnifiedTopology: true })
     //to read json
     app.use(bodyParser.json())
 //mdae change to line 31 {films: results}
+
+    app.get('/', (req, res) => {
+      db.collection('kinderhorror').find().toArray()
+      .then(results => {
+        res.render('pages/index', { films: results })
+      })
+      .catch(error => console.error(error))
+    })
+
+    // // // Root Route
+    app.get("/:name", function (req, res, next) {
+      let movieTitle = req.params.name
+
+      db.collection("kinderhorror").find({ title: movieTitle }).toArray()
+      .then(results => {
+        let movie = (results[0])
+        console.log("User selected " + movie.title)
+        // res.json(movie)
+        // res.render('pages/api'
+        res.render('pages/api', {
+          title: movie.title,
+          review: movie.review,
+          summary: movie.summary,
+          kids: movie.forKids,
+          rating: movie.rating,
+          triggers: movie.triggers,
+          imdblink: movie.imdb,
+          wikilink: movie.wiki, 
+          trailer: movie.trailer,
+        })
+      })
+      .catch(error => console.error(error))
+    })
    
     app.get('/admin', (req, res) => {
         db.collection('kinderhorror').find().toArray()
           .then(results => {
-            res.render('pages/admin.ejs', {films: results})
-
+            res.render('pages/admin.ejs', { films: results })
           })
           .catch(error => console.error(error))
-
-        })
-        app.get('/', (req, res) => {
-          db.collection('kinderhorror').find().toArray()
-
-          .then(results => {
-            res.render('pages/index.ejs', {films: results})
-                  })
-                  .catch(error => console.error(error))
-
-                })
-
-// // // Root Route
-app.get("/:name", function (req, res, next) {
-  let movieTitle = req.params.name
-
-  db.collection("kinderhorror")
-    .find({ title: movieTitle })
-    .toArray()
-
-    .then(results => {
-    
-  
-    let movie = (results[0])
-    console.log(movie.trailer)
-    // res.json(movie)
-    // res.render('pages/api'
-    res.render('pages/api', {
-      title: movie.title,
-      review: movie.review,
-      summary: movie.summary,
-      kids: movie.forKids,
-      rating: movie.rating,
-      triggers: movie.triggers,
-      imdblink: movie.imdb,
-      wikilink: movie.wiki, 
-      trailer: movie.trailer,
     })
-  })
-    .catch(error => console.error(error))
-
-  })
-
 
     app.post("/film", (req, res)=>{
         filmCollection.insertOne(req.body)
         .then(result => {
-            console.log(result)        })
+            console.log(result)
             res.redirect("/")
+        })
         .catch(error => console.error(error))
     })
    
