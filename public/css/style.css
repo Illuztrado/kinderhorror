@@ -24,7 +24,7 @@ body {
     color: #f23c36;
     font-family: 'Creepster', Helvetica, Arial, cursive, sans-serif;
     font-size: 2.5rem;
-
+    letter-spacing: 0.15rem;
   }
 
   header h2 {
@@ -100,9 +100,10 @@ body {
   }
 
   div h2 {
+    margin-top: 0;
     font-family: 'Creepster', Helvetica, Arial, cursive, sans-serif;
     font-size: 2rem;
-    margin-top: 0;
+    letter-spacing: 0.25rem;
   }
 
   .movie-details {
