@@ -35,13 +35,35 @@
         <option value="The Black Phone">The Black Phone</option>
       </select> -->
       <!-- <input type="submit" id="submit" value="Submit"> -->
+    </select>
     </form>
 
     <!-- <a href="localhost:8000/api/random">you pick</a> -->
     
 
   </nav>
+  <!--add movie of the month-->
+  <div>
 
+    <h1>Movie of the Month</h1>
+
+    <h2 class="filmcontent" id="filmTitle"><%= motm.title %></h2>
+    
+    <p class="filmcontent" id="filmReview">Review: <%= motm.review %></p>
+    <p class="filmcontent" id="filmSummary">Summary: <%= motm.summary %></p>
+    <p class="filmcontent" id="forKids">For Kids: <%= motm.forKids %></p>
+    <p class="filmcontent" id="rating">Rating: <%= motm.rating %></p>
+    <p class="filmcontent" id="triggerWarnings">Trigger Warnings:  <%= motm.trigger %></p>
+      <a class="filmcontent" id=imdbLink href="<%= motm.imdblink %>">imdb</a>
+      <a class="filmcontent" id=wikiLink href="<%= motm.wikilink %>">wiki</a>
+      <iframe width="560" height="315" src=<%= motm.trailer %>
+      title="YouTube video player" frameborder="0" allow="accelerometer; 
+      autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen></iframe> 
+<!--     why doesnt this work <iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </iframe> -->
+  </div>
+  
 
  
   
